@@ -9,9 +9,12 @@ defmodule Hipchat.Users do
   Returns all users (defaults to 100)
   """
   def all(client) do
-    users_url = "https://api.hipchat.com/v2/user"
-    {_code, users} = HTTP.get(client, users_url)
-    Enum.map users["items"], fn (k) -> %{name: k["name"], id: k["id"]} end
+    users_url = HTTP.build_url("/v2/user")
+    {_code, data} = HTTP.get(client, users_url)
+    case data do
+      %{"error" => _} -> []
+      _ -> Enum.map data["items"], fn (k) -> %{name: k["name"], id: k["id"]} end
+    end
   end
 
   @doc """
@@ -19,7 +22,7 @@ defmodule Hipchat.Users do
   """
   def message(client, options) when is_list(options) do
     user = options[:user_id]
-    user_notification_url = "https://api.hipchat.com/v2/user/#{user}/message"
+    user_notification_url = HTTP.build_url("/v2/user/#{user}/message")
     HTTP.post(client, user_notification_url, Keyword.delete(options, :user_id))
   end
 
@@ -27,7 +30,7 @@ defmodule Hipchat.Users do
   Finds a user and returns code and body
   """
   def find(client, user_id) do
-   user_url = "https://api.hipchat.com/v2/user/#{user_id}"
+   user_url = HTTP.build_url("/v2/user/#{user_id}")
    {code, body} = HTTP.get(client, user_url)
    {code, body}
   end

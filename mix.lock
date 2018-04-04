@@ -1,3 +1,5 @@
-%{"httpotion": {:hex, :httpotion, "2.1.0"},
-  "ibrowse": {:git, "git://github.com/cmullaparthi/ibrowse.git", "ea3305d21f37eced4fac290f64b068e56df7de80", [tag: "v4.1.2"]},
-  "json": {:hex, :json, "0.3.2"}}
+%{
+  "httpotion": {:hex, :httpotion, "2.1.0", "3fe84fbd13d4560c2514da656d022b1191a079178ee4992d245fc3c33c01ee18", [:mix], [], "hexpm"},
+  "ibrowse": {:git, "https://github.com/cmullaparthi/ibrowse.git", "ea3305d21f37eced4fac290f64b068e56df7de80", [tag: "v4.1.2"]},
+  "json": {:hex, :json, "0.3.2", "e40a15993024a0cb4f5e22816d6be34002cc4463c61789ed35ec94c41911ebee", [:mix], [], "hexpm"},
+}

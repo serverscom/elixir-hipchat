@@ -7,8 +7,7 @@ defmodule Hipchat.HTTP do
   Performs GET request
   """
   def get(client, url) do
-    IO.inspect set_headers(client)
-    response = HTTPotion.get(url, [headers: set_headers(client), timeout: Dict.get(client, :timeout, 5000)])
+    response = HTTPotion.get(url, [headers: set_headers(client), timeout: Keyword.get(client, :timeout, 5000)])
     {_, body} =  parse_body(response.body)
     { response.status_code, body }
   end
@@ -17,7 +16,7 @@ defmodule Hipchat.HTTP do
   Performs POST request
   """
   def post(client, url, payload) do
-    response = HTTPotion.post(url, [body: encode_payload(payload), headers: set_headers(client), timeout: Dict.get(client, :timeout, 5000)])
+    response = HTTPotion.post(url, [body: encode_payload(payload), headers: set_headers(client), timeout: Keyword.get(client, :timeout, 5000)])
     {_, body} =  parse_body(response.body)
     {response.status_code, body}
   end
@@ -26,7 +25,7 @@ defmodule Hipchat.HTTP do
   Builds headers
   """
   def set_headers(client) do
-    ["Authorization": "Bearer " <> to_string(Dict.get(client, :token)),
+    ["Authorization": "Bearer " <> to_string(Keyword.get(client, :token)),
      "Accept": "application/json",
      "content-type": "application/json"]
   end
@@ -37,6 +36,10 @@ defmodule Hipchat.HTTP do
   def encode_payload(payload) do
     {:ok, json } = JSON.encode(payload)
     json
+  end
+
+  def build_url(path) do
+    Hipchat.Config.server_url <> path
   end
 
   defp parse_body(body) do

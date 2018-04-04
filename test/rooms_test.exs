@@ -13,13 +13,13 @@ defmodule HipchatRoomsTest do
   # note this expects a room called test
   test "hipchat.rooms.message sends message to specfic room" do
     client = [token: System.get_env("TOKEN")]
-    {code, body} = Hipchat.Rooms.message(client, [room_id: "test", message: "foobar"])
+    {code, _body} = Hipchat.Rooms.message(client, [room_id: "test", message: "foobar"])
     assert code == 204
   end
 
   test "hipchat.rooms.find returns a room" do
     client = [token: System.get_env("TOKEN")]
-    {code, body} = Hipchat.Rooms.find(client, "test")
+    {code, _body} = Hipchat.Rooms.find(client, "test")
     assert code
   end
 end
